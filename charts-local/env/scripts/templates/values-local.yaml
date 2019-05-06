@@ -1,0 +1,7 @@
+jhipster-gateway-keycloak:
+  service:
+    type: NodePort
+    nodePort: 30950
+
+
+
