@@ -28,6 +28,19 @@ spec:
         - name: {{ $pkey }}
           value: {{ $pval }}
 {{- end }}
+
+        - name: SPRING_DATA_MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: cryptocurrency-services-api-gateway-secrets
+              key: spring-data-mongodb-uri
+
+        - name: MONGO_DATABASE_GATEWAY
+          valueFrom:
+            secretKeyRef:
+              name: cryptocurrency-services-api-gateway-secrets
+              key: mongo-database-gateway
+
         ports:
         - containerPort: {{ .Values.service.appPort }}
         - containerPort: {{ .Values.service.adminPort }}
