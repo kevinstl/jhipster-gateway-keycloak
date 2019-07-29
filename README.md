@@ -259,12 +259,27 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [swagger-editor]: http://editor.swagger.io
 [doing api-first development]: https://www.jhipster.tech/documentation-archive/v5.8.2/doing-api-first-development/
 
+PostgreSQL:
+
+helm --namespace=jx-local install --name postgresql stable/postgresql \
+--set global.postgresql.existingSecret=secret \
+-f charts/postgresql/values.yaml
+
+helm del --purge postgresql
+
+Keycloak:
+
 helm repo add codecentric https://codecentric.github.io/helm-charts
 
 https://github.com/codecentric/helm-charts/tree/master/charts/keycloak
 
 helm install --name keycloak codecentric/keycloak
 
-helm --namespace=jx-local install --name keycloak codecentric/keycloak --set keycloak.service.type=NodePort --set keycloak.service.nodePort=30890
+helm --namespace=jx-local install --name keycloak codecentric/keycloak \
+--set keycloak.service.type=NodePort \
+--set keycloak.service.nodePort=30890 \
+--set keycloak.persistence.existingSecret=secret \
+--set keycloak.persistence.existingSecretKey=secretKey \
+-f charts/keycloak/values.yaml
 
 helm del --purge keycloak

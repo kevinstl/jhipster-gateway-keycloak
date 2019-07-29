@@ -1,0 +1,4 @@
+global:
+    postgresql:
+        postgresqlDatabase: keycloak
+        postgresqlUsername: keycloak
