@@ -262,7 +262,7 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 PostgreSQL:
 
 helm --namespace=jx-local install --name postgresql stable/postgresql \
---set global.postgresql.existingSecret=secret \
+--set global.postgresql.existingSecret=keycloak-secrets \
 -f charts/postgresql/values.yaml
 
 helm del --purge postgresql
@@ -278,8 +278,8 @@ helm install --name keycloak codecentric/keycloak
 helm --namespace=jx-local install --name keycloak codecentric/keycloak \
 --set keycloak.service.type=NodePort \
 --set keycloak.service.nodePort=30890 \
---set keycloak.persistence.existingSecret=secret \
---set keycloak.persistence.existingSecretKey=secretKey \
+--set keycloak.username=username \
+--set keycloak.password=password \
 -f charts/keycloak/values.yaml
 
 helm del --purge keycloak

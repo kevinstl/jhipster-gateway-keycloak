@@ -4,20 +4,36 @@ keycloak:
     # Disable deployment of the PostgreSQL chart
     deployPostgres: false
 
-    # The database vendor. Can be either "postgres", "mysql", "mariadb", or "h2"
+    # The database vendor. Can be either "postgres mysql mariadb", or "h2"
     dbVendor: postgres
 
     ## The following values only apply if "deployPostgres" is set to "false"
 
     # Optionally specify an existing secret
-#    existingSecret: "my-database-password-secret"
-#    existingSecretKey: "password-key in-my-database-secret"
+    existingSecret: "keycloak-secrets"
+    existingSecretKey: "postgresql-password"
 
     dbName: keycloak
 #    dbHost: mykeycloak
-#    dbHost: localhost
+    dbHost: postgresql.jx-local.svc.cluster.local
 #    dbPort: 5432 # 5432 is PostgreSQL's default port. For MySQL it would be 3306
     dbUser: keycloak
 
     # Only used if no existing secret is specified. In this case a new secret is created
 #    dbPassword: keycloak
+
+
+
+  extraVolumes: |
+    - name: realm-secret
+      secret:
+        secretName: realm-secret
+
+  extraVolumeMounts: |
+    - name: realm-secret
+      mountPath: "/realm/"
+      readOnly: true
+
+#      "-Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/opt/jboss/keycloak/realm-config -Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
+
+  extraArgs: -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/realm -Dkeycloak.migration.strategy=OVERWRITE_EXISTING

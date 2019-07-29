@@ -2,3 +2,5 @@ global:
     postgresql:
         postgresqlDatabase: keycloak
         postgresqlUsername: keycloak
+        existingSecret: keycloak-secrets
+        postgresqlPassword: postgresql-password
