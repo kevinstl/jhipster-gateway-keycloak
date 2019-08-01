@@ -261,6 +261,8 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 
 PostgreSQL:
 
+https://github.com/bitnami/charts/tree/master/upstreamed/postgresql
+
 helm --namespace=jx-local install --name postgresql stable/postgresql \
 --set global.postgresql.existingSecret=keycloak-secrets \
 -f charts/postgresql/values.yaml
